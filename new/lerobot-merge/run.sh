@@ -4,7 +4,7 @@ IFS=$'\n\t'
 
 # === 配置区 ===
 # ROOT_DIR="/home/leju_kuavo/1234/"
-ROOT_DIR="/media/leju_kuavo/My Passport/default/1208-YP0035/S7MRNS0Y713189K"
+ROOT_DIR="/media/leju_kuavo/My Passport/default/1208-YP0036/S7MRNS0Y713999A"
 MERGE_SCRIPT="lerobot_qc/merge_data.py"
 VALIDATE_SCRIPT="lerobot_qc/validator_local.py"
 FETCH_SCRIPT="lerobot_qc/fetch_dataset_summaries.py"
