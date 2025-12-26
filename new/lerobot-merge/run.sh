@@ -4,7 +4,7 @@ IFS=$'\n\t'
 
 # === 配置区 ===
 # ROOT_DIR="/home/leju_kuavo/1234/"
-ROOT_DIR="/media/leju_kuavo/My Passport/default/1208-YP0036/S7MRNS0Y713999A"
+ROOT_DIR="/media/leju_kuavo/My Passport/batch08/蚂蚁1202-苏州闪迪07号"
 MERGE_SCRIPT="lerobot_qc/merge_data.py"
 VALIDATE_SCRIPT="lerobot_qc/validator_local.py"
 FETCH_SCRIPT="lerobot_qc/fetch_dataset_summaries.py"
@@ -20,8 +20,16 @@ for f in "$MERGE_SCRIPT" "$VALIDATE_SCRIPT" "$CONFIG_CLAW"; do
 done
 
 # === 主流程 ===
-echo "🔍 查找 Kuavo_4Pro 层级下的 lerobot 目录..."
-mapfile -t lerobot_dirs < <(find "$ROOT_DIR/Kuavo_4Pro" -type d -path '*/success/lerobot' | sort)
+echo "🔍 查找 Kuavo_4Pro 和 Kuavo_LB 层级下的 lerobot 目录..."
+lerobot_dirs=()
+for subdir in Kuavo_4Pro Kuavo_LB; do
+    if [ -d "$ROOT_DIR/$subdir" ]; then
+        while IFS= read -r line; do
+            lerobot_dirs+=("$line")
+        done < <(find "$ROOT_DIR/$subdir" -type d -path '*/success/lerobot' 2>/dev/null)
+    fi
+done
+IFS=$'\n' lerobot_dirs=($(printf "%s\n" "${lerobot_dirs[@]}" | sort))
 
 if [ ${#lerobot_dirs[@]} -eq 0 ]; then
     echo "⚠️ 未找到任何 lerobot 目录"
